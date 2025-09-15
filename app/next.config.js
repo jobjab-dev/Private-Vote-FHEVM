@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Standalone build for Vercel (no monorepo dependencies)
-  output: 'standalone',
-  
-  // Exclude files outside app/ directory for standalone build
-  outputFileTracingExcludes: {
-    '/': ['../**/*'],
-  },
   
   webpack: (config) => {
     // Handle node modules that might not be compatible with webpack

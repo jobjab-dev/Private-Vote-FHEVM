@@ -16,6 +16,7 @@
     "clean:contracts": "cd contracts && npm run clean",
     "clean:frontend": "cd app && npm run build:clean",
     
+    "compile": "cd contracts && npm run compile",
     "build": "npm run build:contracts && npm run build:frontend", 
     "build:contracts": "cd contracts && npm run build",
     "build:frontend": "cd app && npm run build",
@@ -32,6 +33,9 @@
     "lint": "npm run lint:contracts && npm run lint:frontend",
     "lint:contracts": "cd contracts && npm run lint",
     "lint:frontend": "cd app && npm run lint",
+    
+    "format:check": "prettier --check .",
+    "format:fix": "prettier --write .",
     
     "start": "npm run dev:frontend"
   },

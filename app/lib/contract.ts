@@ -5,7 +5,22 @@
 
 import { createPublicClient, createWalletClient, http, parseEther, formatEther } from 'viem';
 import { sepolia } from 'viem/chains';
-import type { CreatePollParams, VoteParams } from '../types/contract';
+// Inline types to avoid path resolution issues on Vercel
+export interface CreatePollParams {
+  title: string;
+  description: string;
+  options: string[];
+  startTime: number;
+  endTime: number;
+  imageFile?: File | null;
+}
+
+export interface VoteParams {
+  pollId: number;
+  optionId: number;
+  encryptedOne: string;
+  inputProof: string;
+}
 
 // Import ABI from exported file
 let PrivateVoteABI: any = null;

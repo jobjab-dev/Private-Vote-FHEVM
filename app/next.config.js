@@ -12,8 +12,17 @@ const nextConfig = {
       tls: false,
     };
     
-    // Ignore warnings for node modules
-    config.ignoreWarnings = [/Failed to parse source map/];
+    // Ignore warnings for node modules  
+    config.ignoreWarnings = [
+      /Failed to parse source map/,
+      /Can't resolve 'pino-pretty'/,
+    ];
+    
+    // Fix pino-pretty resolution issue in production
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'pino-pretty': false,
+    };
     
     return config;
   },

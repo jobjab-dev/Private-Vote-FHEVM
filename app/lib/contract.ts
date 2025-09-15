@@ -5,7 +5,7 @@
 
 import { createPublicClient, createWalletClient, http, parseEther, formatEther } from 'viem';
 import { sepolia } from 'viem/chains';
-import type { PrivateVoteABI, CreatePollParams, VoteParams } from '../types/contract';
+import type { CreatePollParams, VoteParams } from '../types/contract';
 
 // Import ABI from exported file
 let PrivateVoteABI: any = null;

@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Set output file tracing root to fix Vercel workspace detection
+  outputFileTracingRoot: require('path').join(__dirname),
+  
   webpack: (config) => {
     // Handle node modules that might not be compatible with webpack
     config.resolve.fallback = {

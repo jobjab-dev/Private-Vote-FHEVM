@@ -24,11 +24,15 @@ export interface VoteParams {
 
 // Import ABI from exported file
 let PrivateVoteABI: any = null;
-try {
-  PrivateVoteABI = require('./PrivateVote.json');
-  console.log('✅ Contract ABI loaded successfully');
-} catch (error) {
-  console.error('❌ Contract ABI not found. Run: cd contracts && npm run export-abi');
+
+// Only load ABI in browser environment
+if (typeof window !== 'undefined') {
+  try {
+    PrivateVoteABI = require('./PrivateVote.json');
+    console.log('✅ Contract ABI loaded successfully');
+  } catch (error) {
+    console.error('❌ Contract ABI not found. Run: cd contracts && npm run export-abi');
+  }
 }
 
 export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`;
@@ -51,8 +55,9 @@ export const publicClient = createPublicClient({
  */
 export async function getCreationFee(): Promise<string> {
   try {
-    if (!PrivateVoteABI || !CONTRACT_ADDRESS) {
-      console.warn('Contract not available, using fallback fee');
+    // Server-side fallback
+    if (typeof window === 'undefined' || !PrivateVoteABI || !CONTRACT_ADDRESS) {
+      console.warn('⚠️ Server-side or contract not available, using fallback fee');
       return '0.001';
     }
 
@@ -77,8 +82,8 @@ export async function getCreationFee(): Promise<string> {
  */
 export async function getPollCount(): Promise<number> {
   try {
-    if (!PrivateVoteABI || !CONTRACT_ADDRESS) {
-      console.warn('Contract not available for poll count');
+    if (typeof window === 'undefined' || !PrivateVoteABI || !CONTRACT_ADDRESS) {
+      console.warn('⚠️ Server-side or contract not available for poll count');
       return 0;
     }
 
@@ -103,8 +108,8 @@ export async function getPollCount(): Promise<number> {
  */
 export async function getPollInfo(pollId: number) {
   try {
-    if (!PrivateVoteABI || !CONTRACT_ADDRESS) {
-      console.warn(`Contract not available for poll ${pollId}`);
+    if (typeof window === 'undefined' || !PrivateVoteABI || !CONTRACT_ADDRESS) {
+      console.warn(`⚠️ Server-side or contract not available for poll ${pollId}`);
       return null;
     }
 

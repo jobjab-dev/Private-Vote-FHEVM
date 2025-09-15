@@ -10,7 +10,22 @@ import { Countdown } from '../../../components/Countdown';
 
 export default function ResultsPage() {
   const params = useParams();
-  const pollId = parseInt(params.pollId as string);
+  const pollIdParam = params.pollId as string;
+  
+  // Safety check for pollId parameter
+  if (!pollIdParam || isNaN(parseInt(pollIdParam))) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl font-bold text-red-400">Invalid Poll ID</h1>
+          <p className="text-gray-400">The poll ID must be a valid number.</p>
+          <a href="/" className="btn-zama-primary">Back to Home</a>
+        </div>
+      </div>
+    );
+  }
+  
+  const pollId = parseInt(pollIdParam);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   
   const { poll, isLoading: pollLoading, refreshPoll } = usePoll(pollId);

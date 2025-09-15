@@ -21,7 +21,7 @@ export function usePublicReveal(pollId: number): UsePublicRevealResult {
   const [canReveal, setCanReveal] = useState<boolean | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isChecking, setIsChecking] = useState(false);
-  const checkTimeoutRef = useRef<NodeJS.Timeout>();
+  const checkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   // Contract interaction hooks
   const {

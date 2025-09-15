@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { contractUtils, CONTRACT_ADDRESS } from '../lib/contract';
 
 export interface UsePublicRevealResult {
@@ -22,6 +22,9 @@ export function usePublicReveal(pollId: number): UsePublicRevealResult {
   const [error, setError] = useState<string | null>(null);
   const [isChecking, setIsChecking] = useState(false);
   const checkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Account hook
+  const { address, chain } = useAccount();
   
   // Contract interaction hooks
   const {
@@ -103,6 +106,8 @@ export function usePublicReveal(pollId: number): UsePublicRevealResult {
         abi: contractUtils.getABI(),
         functionName: 'publicReveal',
         args: [BigInt(pollId)],
+        chain,
+        account: address
       });
 
       console.log('⏳ Public reveal transaction submitted');

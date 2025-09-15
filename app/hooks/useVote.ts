@@ -13,7 +13,7 @@ interface VoteParams {
 export function useVote() {
   const [error, setError] = useState<string | null>(null);
   const [isEncrypting, setIsEncrypting] = useState(false);
-  const { address } = useAccount();
+  const { address, chain } = useAccount();
   
   // Contract interaction hooks
   const {
@@ -72,6 +72,8 @@ export function useVote() {
           encryptedVote,
           inputProof
         ],
+        chain,
+        account: address
       });
 
       console.log('⏳ Vote transaction submitted');

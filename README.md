@@ -67,6 +67,7 @@ Visit `http://localhost:3000`
 
 ## 🔗 Links
 
+- **DApp**: [PrivateVote-DAap]()
 - **GitHub**: [jobjab-dev/Private-Vote-FHEVM](https://github.com/jobjab-dev/Private-Vote-FHEVM)
 - **X/Twitter**: [@jobjab_eth](https://x.com/jobjab_eth)
 - **Zama**: [FHEVM Documentation](https://docs.zama.ai/protocol)

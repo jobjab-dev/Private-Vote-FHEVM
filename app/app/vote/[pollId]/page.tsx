@@ -12,9 +12,21 @@ import { contractUtils } from '../../../lib/contract';
 export default function VotePage() {
   const params = useParams();
   const pollIdParam = params.pollId as string;
+  const pollId = parseInt(pollIdParam);
   
-  // Safety check for pollId parameter
-  if (!pollIdParam || isNaN(parseInt(pollIdParam))) {
+  // Early validation - before hooks
+  const isValidPollId = pollIdParam && !isNaN(pollId);
+  
+  const { isConnected, address } = useAccount();
+  const { poll, isLoading } = usePoll(isValidPollId ? pollId : 0);
+  const { vote, isVoting, error, transactionHash, isConfirmed } = useVote();
+  
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [hasVoted, setHasVoted] = useState<boolean | null>(null);
+  const [isCheckingVoteStatus, setIsCheckingVoteStatus] = useState(false);
+
+  // Show error if invalid pollId
+  if (!isValidPollId) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -25,15 +37,6 @@ export default function VotePage() {
       </div>
     );
   }
-  
-  const pollId = parseInt(pollIdParam);
-  const { isConnected, address } = useAccount();
-  const { poll, isLoading } = usePoll(pollId);
-  const { vote, isVoting, error, transactionHash, isConfirmed } = useVote();
-  
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [hasVoted, setHasVoted] = useState<boolean | null>(null);
-  const [isCheckingVoteStatus, setIsCheckingVoteStatus] = useState(false);
 
   // Check if user has already voted
   useEffect(() => {
@@ -102,7 +105,7 @@ export default function VotePage() {
     return (
       <div className="text-center py-12">
         <h2 className="text-2xl font-bold text-white mb-4">Poll Not Found</h2>
-        <p className="text-gray-400">The poll you're looking for doesn't exist.</p>
+        <p className="text-gray-400">The poll you&apos;re looking for doesn&apos;t exist.</p>
         <a href="/" className="btn-zama-primary mt-6 inline-block">
           Back to Polls
         </a>
@@ -247,7 +250,7 @@ export default function VotePage() {
             disabled={selectedOption === null || isVoting}
             className="w-full btn-zama-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isVoting ? 'Encrypting & Casting Vote...' : 'Cast Encrypted Vote'}
+            {isVoting ? 'Encrypting &amp; Casting Vote...' : 'Cast Encrypted Vote'}
           </button>
           
           {/* Transaction Status */}
@@ -299,7 +302,7 @@ export default function VotePage() {
         <div className="card-zama text-center">
           <h2 className="text-xl font-bold text-white mb-4">Voting Not Started</h2>
           <p className="text-gray-400 mb-6">
-            This poll hasn't started yet. Come back when voting begins.
+            This poll hasn&apos;t started yet. Come back when voting begins.
           </p>
           <Countdown targetTime={poll.startTime} />
         </div>

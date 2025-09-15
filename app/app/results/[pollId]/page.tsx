@@ -11,9 +11,19 @@ import { Countdown } from '../../../components/Countdown';
 export default function ResultsPage() {
   const params = useParams();
   const pollIdParam = params.pollId as string;
+  const pollId = parseInt(pollIdParam);
   
-  // Safety check for pollId parameter
-  if (!pollIdParam || isNaN(parseInt(pollIdParam))) {
+  // Early validation - before hooks
+  const isValidPollId = pollIdParam && !isNaN(pollId);
+  
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  
+  const { poll, isLoading: pollLoading, refreshPoll } = usePoll(isValidPollId ? pollId : 0);
+  const { results, isLoading: resultsLoading } = usePollResults(isValidPollId ? pollId : 0, refreshTrigger);
+  const { isRevealing, canReveal, error, transactionHash, isConfirmed, revealPoll, checkCanReveal } = usePublicReveal(isValidPollId ? pollId : 0);
+
+  // Show error if invalid pollId
+  if (!isValidPollId) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -24,13 +34,6 @@ export default function ResultsPage() {
       </div>
     );
   }
-  
-  const pollId = parseInt(pollIdParam);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
-  
-  const { poll, isLoading: pollLoading, refreshPoll } = usePoll(pollId);
-  const { results, isLoading: resultsLoading } = usePollResults(pollId, refreshTrigger);
-  const { isRevealing, canReveal, error, transactionHash, isConfirmed, revealPoll, checkCanReveal } = usePublicReveal(pollId);
 
   // Check reveal status once when poll loads
   useEffect(() => {

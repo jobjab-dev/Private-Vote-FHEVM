@@ -3,11 +3,9 @@ const nextConfig = {
   // Standalone build for Vercel (no monorepo dependencies)
   output: 'standalone',
   
-  // Disable experimental features that might cause issues
-  experimental: {
-    outputFileTracingExcludes: {
-      '/': ['../**/*'],
-    },
+  // Exclude files outside app/ directory for standalone build
+  outputFileTracingExcludes: {
+    '/': ['../**/*'],
   },
   
   webpack: (config) => {

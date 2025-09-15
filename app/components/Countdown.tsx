@@ -22,7 +22,7 @@ export function Countdown({ targetTime }: CountdownProps) {
   }, [targetTime]);
 
   if (timeLeft <= 0) {
-    return <span className="text-red-400 font-medium">Time's up!</span>;
+    return <span className="text-red-400 font-medium">Time&apos;s up!</span>;
   }
 
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));

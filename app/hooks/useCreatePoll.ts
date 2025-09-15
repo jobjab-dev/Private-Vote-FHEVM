@@ -16,7 +16,7 @@ interface CreatePollParams {
 export function useCreatePoll() {
   const [isCreating, setIsCreating] = useState(false);
   const [creationFee, setCreationFee] = useState<string>('0.001');
-  const { address } = useAccount();
+  const { address, chain } = useAccount();
   
   const { writeContract, data: hash, error: writeError } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
@@ -84,6 +84,8 @@ export function useCreatePoll() {
           BigInt(endTimeSeconds)
         ],
         value: parseEther(creationFee), // 0.001 ETH creation fee
+        chain,
+        account: address
       });
 
       console.log('📡 Transaction submitted...');

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# PrivateVote - Confidential Voting dApp
+# Built with Zama FHEVM
+
+Sitemap: https://localhost:3000/sitemap.xml

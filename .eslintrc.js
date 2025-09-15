@@ -1,0 +1,43 @@
+module.exports = {
+  env: {
+    browser: false,
+    es6: true,
+    mocha: true,
+    node: true,
+  },
+  plugins: ["@typescript-eslint"],
+  extends: [
+    "eslint:recommended",
+    "@typescript-eslint/recommended",
+    "prettier",
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2022,
+    project: "./tsconfig.json",
+    sourceType: "module",
+  },
+  rules: {
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-misused-promises": "error",
+    "prefer-const": "error",
+    "no-var": "error",
+    "no-console": "warn",
+    "eqeqeq": "error",
+    "no-eval": "error",
+    "no-implied-eval": "error",
+  },
+  ignorePatterns: [
+    "node_modules/",
+    "artifacts/",
+    "cache/",
+    "coverage/",
+    "types/",
+    "dist/",
+    "app/",
+    "Zama_docs/",
+    "config/",
+  ],
+};

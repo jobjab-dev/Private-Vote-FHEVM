@@ -1,0 +1,43 @@
+{
+  "name": "@privatevote/frontend",
+  "version": "1.0.0",
+  "description": "PrivateVote FHEVM Frontend - Responsive Web App",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "wagmi": "^2.12.0",
+    "viem": "^2.21.0", 
+    "@tanstack/react-query": "^5.56.0",
+    "@rainbow-me/rainbowkit": "^2.1.0",
+    "ethers": "^6.13.0",
+    "@zama-fhe/relayer-sdk": "^0.2.0",
+    "lucide-react": "^0.445.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "eslint": "^9.11.0",
+    "eslint-config-next": "^15.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

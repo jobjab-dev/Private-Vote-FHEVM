@@ -1,0 +1,10 @@
+{
+  "chainId": 11155111,
+  "networkName": "sepolia",
+  "contractAddress": "0x2BcE7330F68d3f36749fb248D3C76Bd82A6FA71a",
+  "owner": "0x2E35c2abd06d974e5a519eB66a415Ced302b991d",
+  "creationFee": "0.001",
+  "deploymentBlock": 9207461,
+  "deploymentTime": "2025-09-15T08:42:59.505Z",
+  "transactionHash": "0x4d637eeaa9a5bfd485fd37af04c83963b2760de03bbbc038048aef5a10d945db"
+}

@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Set output file tracing root to fix Vercel workspace detection
-  outputFileTracingRoot: require('path').join(__dirname),
+  // Standalone build for Vercel (no monorepo dependencies)
+  output: 'standalone',
+  
+  // Disable experimental features that might cause issues
+  experimental: {
+    outputFileTracingExcludes: {
+      '/': ['../**/*'],
+    },
+  },
   
   webpack: (config) => {
     // Handle node modules that might not be compatible with webpack

@@ -341,7 +341,7 @@ export async function getPollCreationTx(pollId: number): Promise<string | null> 
       args: {
         pollId: BigInt(pollId)
       },
-      fromBlock: 'earliest',
+      fromBlock: BigInt(9200000), // Start from recent Sepolia block 
       toBlock: 'latest'
     });
 

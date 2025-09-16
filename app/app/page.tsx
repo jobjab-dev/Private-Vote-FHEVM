@@ -33,12 +33,12 @@ export default function PollsListPage() {
             <div className="text-sm text-gray-500">
               Contract:{' '}
               <a 
-                href="https://sepolia.etherscan.io/address/0x2BcE7330F68d3f36749fb248D3C76Bd82A6FA71a#code" 
+                href="https://sepolia.etherscan.io/address/0xDdB4E900121CF43FE1FbF26DFeB752587a776B79#code" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="font-mono text-yellow-400 hover:text-yellow-300 transition-colors underline decoration-dotted"
               >
-                0x2BcE7330F68d3f36749fb248D3C76Bd82A6FA71a
+                0xDdB4E900121CF43FE1FbF26DFeB752587a776B79
               </a>
             </div>
           </div>

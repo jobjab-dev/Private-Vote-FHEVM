@@ -15,6 +15,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log(`Owner: ${owner}`);
   console.log("===================================");
 
+  // Clean up old deployment cache for fresh deployment
+  const fs = require("fs");
+  const path = require("path");
+  const deploymentDir = path.join(__dirname, "..", "deployments", network.name);
+  if (fs.existsSync(deploymentDir)) {
+    // Remove entire network deployment directory
+    fs.rmSync(deploymentDir, { recursive: true, force: true });
+    console.log(`🗑️  Removed entire deployment directory: ${deploymentDir}`);
+  }
+
   // Pre-deployment gas analysis (Sepolia only)
   if (network.name === "sepolia") {
     const useFixedGas = process.env.USE_FIXED_GAS === "true";
@@ -34,6 +44,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     args: [owner], // Owner address as constructor argument
     log: true,
     waitConfirmations: network.name === "sepolia" ? 5 : 1,
+    skipIfAlreadyDeployed: false, // Always deploy new contract, never reuse
+    deterministicDeployment: false, // Disable deterministic deployment to force new address
   });
 
   console.log("===================================");
@@ -44,8 +56,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log("===================================");
 
   // Save deployment info to file for frontend
-  const fs = require("fs");
-  const path = require("path");
 
   const deploymentInfo = {
     chainId: network.config.chainId,

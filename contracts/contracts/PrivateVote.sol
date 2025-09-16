@@ -212,7 +212,6 @@ contract PrivateVote is SepoliaConfig {
         for (uint256 i = 0; i < options.length; i++) {
             euint64 encryptedZero = FHE.asEuint64(0);
             newPoll.encTallies[i] = encryptedZero;
-            
             // Grant permissions for the contract to use these ciphertexts
             FHE.allowThis(encryptedZero);
         }
@@ -277,7 +276,7 @@ contract PrivateVote is SepoliaConfig {
     /**
      * @notice Callback function called by the decryption oracle
      * @param requestId The decryption request ID
-     * @param cleartexts The decrypted values
+     * @param cleartexts The decrypted values (ABI-encoded, 32 bytes per static value)
      * @param decryptionProof The proof of correct decryption
      */
     function revealCallback(
@@ -293,24 +292,24 @@ contract PrivateVote is SepoliaConfig {
                 break;
             }
         }
-        
         if (pollId == type(uint256).max) revert UnauthorizedCallback();
-        
-        // Verify the decryption proof
+
+        // Verify requestId binding and signatures
+        require(_decryptionRequestIds[pollId] == requestId, "Invalid requestId");
         FHE.checkSignatures(requestId, cleartexts, decryptionProof);
         
         Poll storage poll = polls[pollId];
         
-        // Decode the decrypted tallies
+        // Decode the decrypted tallies (ABI-encoded uint64 values = 32 bytes each)
         uint256 optionsCount = poll.options.length;
         uint256[] memory decryptedTallies = new uint256[](optionsCount);
         
-        // Decode each tally (uint64 values)
         for (uint256 i = 0; i < optionsCount; i++) {
-            uint64 tally;
+            uint256 word;
             assembly {
-                tally := mload(add(add(cleartexts, 0x20), mul(i, 0x08)))
+                word := mload(add(add(cleartexts, 0x20), mul(i, 0x20))) // 32 bytes per value
             }
+            uint64 tally = uint64(word);
             decryptedTallies[i] = uint256(tally);
             poll.plainTallies[i] = uint256(tally);
         }
@@ -353,6 +352,9 @@ contract PrivateVote is SepoliaConfig {
         
         // Verify and get the encrypted vote (should be 1)
         euint64 encVote = FHE.fromExternal(encryptedOne, inputProof);
+
+        // ACL check for encrypted inputs (must check on internal euint*)
+        require(FHE.isSenderAllowed(encVote), "Unauthorized encrypted input");
         
         // Add the encrypted vote to the tally using homomorphic addition
         euint64 currentTally = poll.encTallies[optionId];

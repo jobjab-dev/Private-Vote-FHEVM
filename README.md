@@ -41,7 +41,7 @@ Visit `http://localhost:3000`
 
 ## ⚡ Live Demo
 
-- **Demo**: `http://localhost:3000` 
+- **Demo**: `https://private-vote-fhevm-app.vercel.app/` 
 - **Contract**: [`0x2BcE7330F68d3f36749fb248D3C76Bd82A6FA71a`](https://sepolia.etherscan.io/address/0x2BcE7330F68d3f36749fb248D3C76Bd82A6FA71a#code) (Sepolia)
 - **Documentation**: [Read the Docs →](docs/)
 
